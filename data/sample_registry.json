@@ -1,0 +1,72 @@
+{
+  "samples": [
+    {
+      "id": "SMP-JEZ-004",
+      "name": "Kodiak Fluvial Conglomerate",
+      "site_id": "jezero-crater",
+      "sol": 1083,
+      "coordinates": {
+        "lat": 18.3502,
+        "lon": 77.5104
+      },
+      "rock_type": "Fluvial Conglomerate",
+      "mineralogy": "Quartz, Magnetite, Feldspar",
+      "mass_grams": 49.3,
+      "tube_seal_status": "HERMETIC_SEALED",
+      "scientific_significance": "Direct evidence of energetic river transport into paleolake Jezero.",
+      "logged_by": "Lead Astrobiologist (ARES-IV)",
+      "timestamp": "2026-10-19T11:53:23.618Z"
+    },
+    {
+      "id": "SMP-JEZ-001",
+      "name": "Roubion Abraded Core",
+      "site_id": "jezero-crater",
+      "sol": 196,
+      "coordinates": {
+        "lat": 18.3742,
+        "lon": 77.5741
+      },
+      "rock_type": "Basaltic Igneous",
+      "mineralogy": "Pyroxene, Plagioclase, Olivine",
+      "mass_grams": 44.2,
+      "tube_seal_status": "HERMETIC_SEALED",
+      "scientific_significance": "Pristine crater floor volcanic unit dating the Jezero impact basin age.",
+      "logged_by": "Mission Specialist 1 (ARES-IV)",
+      "timestamp": "2026-10-14T08:22:15Z"
+    },
+    {
+      "id": "SMP-JEZ-002",
+      "name": "Wildcat Ridge Siltstone",
+      "site_id": "jezero-crater",
+      "sol": 542,
+      "coordinates": {
+        "lat": 18.4185,
+        "lon": 77.5212
+      },
+      "rock_type": "Lacustrine Siltstone",
+      "mineralogy": "Smectite, Quartz, Aromatic Organics",
+      "mass_grams": 51.8,
+      "tube_seal_status": "HERMETIC_SEALED",
+      "scientific_significance": "Delta front river deposit showing high concentration of sulfate salts and organic carbon macromolecules.",
+      "logged_by": "Lead Astrobiologist (ARES-IV)",
+      "timestamp": "2026-10-16T14:40:02Z"
+    },
+    {
+      "id": "SMP-GAL-003",
+      "name": "Cumberland Mudstone Borehole",
+      "site_id": "gale-crater",
+      "sol": 279,
+      "coordinates": {
+        "lat": -4.5752,
+        "lon": 137.4598
+      },
+      "rock_type": "Fluvial-Lacustrine Mudstone",
+      "mineralogy": "Saponite, Magnetite, Akaganeite",
+      "mass_grams": 62,
+      "tube_seal_status": "HERMETIC_SEALED",
+      "scientific_significance": "Confirmed neutral-pH habitable water environment with bio-essential elements (CHNOPS).",
+      "logged_by": "Geochemistry Specialist",
+      "timestamp": "2026-10-17T11:15:30Z"
+    }
+  ]
+}

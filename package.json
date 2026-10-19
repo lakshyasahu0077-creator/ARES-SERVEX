@@ -1,0 +1,30 @@
+{
+  "name": "ares-survex",
+  "version": "1.0.0",
+  "description": "ARES-SURVEX: Martian Surface Extravehicular Activity (EVA) Operations & Survival Cartography System",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "keywords": [
+    "nasa",
+    "mars",
+    "space-apps",
+    "eva-planner",
+    "planetary-science",
+    "cartography",
+    "telemetry"
+  ],
+  "author": "Mission Software Architecture Team",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "pdfkit": "^0.20.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.9"
+  }
+}

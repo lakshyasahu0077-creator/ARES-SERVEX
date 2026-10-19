@@ -1,0 +1,458 @@
+{
+  "sites": [
+    {
+      "id": "jezero-crater",
+      "name": "Jezero Crater (Delta & Crater Floor)",
+      "callsign": "JEZERO-ALPHA",
+      "coordinates": {
+        "lat": 18.380,
+        "lon": 77.580,
+        "elevation_m": -2530
+      },
+      "quadrangle": "MC-13 Syrtis Major",
+      "surface_type": "Lacustrine & Deltaic Clay/Carbonate System",
+      "recommended_eva_radius_km": 4.5,
+      "base_station": {
+        "id": "HAB-JEZERO-01",
+        "name": "Octavia E. Butler Base Station",
+        "lat": 18.375,
+        "lon": 77.575,
+        "elevation_m": -2535,
+        "shelter_capacity": 6,
+        "o2_recharge_rate_lpm": 8.5,
+        "battery_dock_kw": 12.0
+      },
+      "pois": [
+        {
+          "id": "POI-J01",
+          "name": "Neretva Delta Front Scarp",
+          "category": "science",
+          "lat": 18.420,
+          "lon": 77.520,
+          "elevation_m": -2470,
+          "description": "Ancient river delta deposit with stratified mudstone. High biosignature preservation potential.",
+          "sample_target": "Smectite clays & fine-grained deltaic mudstones",
+          "hazard_grade": "MODERATE",
+          "slope_deg": 14.2
+        },
+        {
+          "id": "POI-J02",
+          "name": "Kodiak Butte Isolated Mesa",
+          "category": "landmark",
+          "lat": 18.350,
+          "lon": 77.510,
+          "elevation_m": -2450,
+          "description": "Prominent remnant erosional butte with bottomset and topset strata demonstrating ancient lake level shifts.",
+          "sample_target": "Fluvial conglomerate pebbles",
+          "hazard_grade": "STEEP_SLOPE",
+          "slope_deg": 22.8
+        },
+        {
+          "id": "POI-J03",
+          "name": "Séítah Fractured Dunefield",
+          "category": "hazard",
+          "lat": 18.365,
+          "lon": 77.545,
+          "elevation_m": -2560,
+          "description": "Rippled basaltic dunes and layered igneous bedrock with olivine cumulates. Extreme rover/EVA wheel and boot sinkage.",
+          "sample_target": "Coarse olivine-rich pyroxene",
+          "hazard_grade": "SOFT_REGOLITH",
+          "slope_deg": 9.5
+        },
+        {
+          "id": "POI-J04",
+          "name": "Belva Impact Crater Rim",
+          "category": "science",
+          "lat": 18.460,
+          "lon": 77.620,
+          "elevation_m": -2380,
+          "description": "Subordinate impact crater offering natural cross-section through deeper deltaic sequence.",
+          "sample_target": "Deep hydrothermal silica & impact melt",
+          "hazard_grade": "STEEP_SLOPE",
+          "slope_deg": 26.4
+        },
+        {
+          "id": "POI-J05",
+          "name": "Three Forks Sample Cache Depot",
+          "category": "depot",
+          "lat": 18.395,
+          "lon": 77.550,
+          "elevation_m": -2520,
+          "description": "Secondary hermetic tube cache depot for MSR retrieval. Critical waypoint with beacon transponder.",
+          "sample_target": "Standard reference cores",
+          "hazard_grade": "LOW",
+          "slope_deg": 3.1
+        }
+      ],
+      "hazards": [
+        {
+          "id": "HAZ-J01",
+          "type": "SOFT_REGOLITH",
+          "name": "South Séítah Ingress Sand Trap",
+          "lat": 18.360,
+          "lon": 77.540,
+          "radius_m": 420,
+          "severity": "CRITICAL",
+          "description": "Fine-grain basalt sand with shear strength under 2.5 kPa. EVA suit sink risk > 25cm. Mobility impediment.",
+          "avoidance_advice": "Bypass east through solid bedrock pathway."
+        },
+        {
+          "id": "HAZ-J02",
+          "type": "STEEP_SLOPE",
+          "name": "Delta Western Escarpment",
+          "lat": 18.435,
+          "lon": 77.505,
+          "radius_m": 600,
+          "severity": "HIGH",
+          "description": "Slope inclination 27.5° exceeds nominal space suit joint limit (20°). Risk of tumble and PLSS impact.",
+          "avoidance_advice": "Use northern switchback ascent corridor."
+        },
+        {
+          "id": "HAZ-J03",
+          "type": "DUST_DEVIL_VORTEX",
+          "name": "Centennial Plains Convective Corridor",
+          "lat": 18.390,
+          "lon": 77.600,
+          "radius_m": 850,
+          "severity": "MODERATE",
+          "description": "High thermal vortex frequency during mid-sol hours (11:30 - 14:45 MTC). Wind gusts up to 28 m/s, static discharge.",
+          "avoidance_advice": "Maintain optical visor gold filter and ground tethering."
+        }
+      ],
+      "elevation_contours": [
+        { "level_m": -2600, "label": "-2600m Floor Depressions" },
+        { "level_m": -2550, "label": "-2550m Lacustrine Basin" },
+        { "level_m": -2500, "label": "-2500m Delta Margin" },
+        { "level_m": -2450, "label": "-2450m Delta Front Upper Tier" },
+        { "level_m": -2400, "label": "-2400m Crater Rim Crest" }
+      ],
+      "telemetry_stream": {
+        "sol": 1142,
+        "mtc": "13:28:44",
+        "temp_c": -62.4,
+        "temp_min_c": -94.1,
+        "temp_max_c": -18.7,
+        "pressure_pa": 642,
+        "radiation_msv_day": 0.68,
+        "dust_optical_depth_tau": 0.72,
+        "wind_speed_mps": 6.8,
+        "wind_direction_deg": 142,
+        "uv_flux_index": "HIGH_UV_C",
+        "active_orbiter": "Mars Reconnaissance Orbiter (MRO)",
+        "comm_window_remaining_min": 38,
+        "uplink_signal_snr_db": 22.4
+      }
+    },
+    {
+      "id": "gale-crater",
+      "name": "Gale Crater (Mount Sharp Aeolis Mons)",
+      "callsign": "GALE-BETA",
+      "coordinates": {
+        "lat": -4.589,
+        "lon": 137.441,
+        "elevation_m": -4450
+      },
+      "quadrangle": "MC-23 Aeolis",
+      "surface_type": "Sedimentary Mound Sequence & Evaporite Beds",
+      "recommended_eva_radius_km": 5.0,
+      "base_station": {
+        "id": "HAB-GALE-02",
+        "name": "Bradbury Station Outpost",
+        "lat": -4.590,
+        "lon": 137.440,
+        "elevation_m": -4460,
+        "shelter_capacity": 4,
+        "o2_recharge_rate_lpm": 7.5,
+        "battery_dock_kw": 10.5
+      },
+      "pois": [
+        {
+          "id": "POI-G01",
+          "name": "Vera Rubin Ridge Hematite Crest",
+          "category": "science",
+          "lat": -4.620,
+          "lon": 137.410,
+          "elevation_m": -4180,
+          "description": "Linear bedrock ridge rich in gray crystalline hematite formed in groundwater redox zones.",
+          "sample_target": "Crystalline hematite and gray sandstone",
+          "hazard_grade": "MODERATE",
+          "slope_deg": 16.5
+        },
+        {
+          "id": "POI-G02",
+          "name": "Gediz Vallis Debris Flow Channel",
+          "category": "landmark",
+          "lat": -4.670,
+          "lon": 137.380,
+          "elevation_m": -3890,
+          "description": "Massive canyon filled with car-sized boulders transported by violent catastrophic ancient floods.",
+          "sample_target": "Boulder core matrix & sulfate breccia",
+          "hazard_grade": "STEEP_SLOPE",
+          "slope_deg": 24.1
+        },
+        {
+          "id": "POI-G03",
+          "name": "Bagnold Active Dunes Field",
+          "category": "hazard",
+          "lat": -4.605,
+          "lon": 137.425,
+          "elevation_m": -4320,
+          "description": "Active migrating barchan dunes with high slip face angle. Extreme particulate electrostatic adhesion.",
+          "sample_target": "Eolian basalt grain fractions",
+          "hazard_grade": "SOFT_REGOLITH",
+          "slope_deg": 18.0
+        },
+        {
+          "id": "POI-G04",
+          "name": "Yellowknife Bay Mudstone Shaler",
+          "category": "science",
+          "lat": -4.575,
+          "lon": 137.460,
+          "elevation_m": -4520,
+          "description": "Ancient habitable lakebed mudstone where organic carbon and nitrates were first verified.",
+          "sample_target": "Saponite clay & gypsum veinlets",
+          "hazard_grade": "LOW",
+          "slope_deg": 4.2
+        }
+      ],
+      "hazards": [
+        {
+          "id": "HAZ-G01",
+          "type": "SHARP_VENTIFACTS",
+          "name": "Gator Bedrock Tire/Boot Hazard",
+          "lat": -4.610,
+          "lon": 137.418,
+          "radius_m": 500,
+          "severity": "HIGH",
+          "description": "Wind-carved chert and hardened basalt ventifacts with razor-sharp edges. Risk of EVA suit boot sole puncture.",
+          "avoidance_advice": "Traverse via sand-cushioned inter-dune corridors."
+        },
+        {
+          "id": "HAZ-G02",
+          "type": "STEEP_SLOPE",
+          "name": "Lower Mount Sharp Pedestal Step",
+          "lat": -4.660,
+          "lon": 137.390,
+          "radius_m": 720,
+          "severity": "CRITICAL",
+          "description": "Vertical terrace scarp with slope angles reaching 29°. Unnavigable for standard pressurized rover or unassisted suit.",
+          "avoidance_advice": "Route through western Gediz chute."
+        }
+      ],
+      "elevation_contours": [
+        { "level_m": -4500, "label": "-4500m Crater Floor Sink" },
+        { "level_m": -4300, "label": "-4300m Dune Basin" },
+        { "level_m": -4100, "label": "-4100m Hematite Ridge" },
+        { "level_m": -3900, "label": "-3900m Sulfate Valley" },
+        { "level_m": -3700, "label": "-3700m Mount Sharp Foothills" }
+      ],
+      "telemetry_stream": {
+        "sol": 4329,
+        "mtc": "09:14:02",
+        "temp_c": -58.1,
+        "temp_min_c": -88.9,
+        "temp_max_c": -12.3,
+        "pressure_pa": 710,
+        "radiation_msv_day": 0.61,
+        "dust_optical_depth_tau": 0.85,
+        "wind_speed_mps": 4.2,
+        "wind_direction_deg": 45,
+        "uv_flux_index": "EXTREME_UV_C",
+        "active_orbiter": "ExoMars Trace Gas Orbiter (TGO)",
+        "comm_window_remaining_min": 19,
+        "uplink_signal_snr_db": 18.9
+      }
+    },
+    {
+      "id": "olympus-mons",
+      "name": "Olympus Mons (Caldera Rim & Scarp Base)",
+      "callsign": "OLYMPUS-GAMMA",
+      "coordinates": {
+        "lat": 18.650,
+        "lon": -133.800,
+        "elevation_m": 21287
+      },
+      "quadrangle": "MC-09 Amazonis",
+      "surface_type": "Shield Volcano Tholeiitic Basalt & Lava Tubes",
+      "recommended_eva_radius_km": 3.0,
+      "base_station": {
+        "id": "HAB-OLYMPUS-03",
+        "name": "Daedalia Caldera Shelter",
+        "lat": 18.645,
+        "lon": -133.795,
+        "elevation_m": 21280,
+        "shelter_capacity": 4,
+        "o2_recharge_rate_lpm": 9.0,
+        "battery_dock_kw": 15.0
+      },
+      "pois": [
+        {
+          "id": "POI-O01",
+          "name": "Caldera Pit #3 Collapse Wall",
+          "category": "science",
+          "lat": 18.680,
+          "lon": -133.780,
+          "elevation_m": 21100,
+          "description": "Multi-ringed nested volcanic collapse caldera exposing pristine subsurface layered flood basalts.",
+          "sample_target": "Unweathered pyroxene-phyric basalt",
+          "hazard_grade": "CRITICAL_SLOPE",
+          "slope_deg": 31.0
+        },
+        {
+          "id": "POI-O02",
+          "name": "Northwest Subsurface Lava Tube Skylight",
+          "category": "shelter",
+          "lat": 18.660,
+          "lon": -133.830,
+          "elevation_m": 21320,
+          "description": "Collapsed ceiling opening into an 80m wide intact subterranean lava conduit. 99% GCR radiation shielding inside.",
+          "sample_target": "Secondary mineralization stalactites",
+          "hazard_grade": "HIGH_FALL_RISK",
+          "slope_deg": 19.5
+        },
+        {
+          "id": "POI-O03",
+          "name": "Fumarolic Vent Deposit",
+          "category": "science",
+          "lat": 18.630,
+          "lon": -133.770,
+          "elevation_m": 21250,
+          "description": "Ancient volcanic degassed sulfur vents with native sulfur and jarosite incrustations.",
+          "sample_target": "Elemental sulfur & iron sulfates",
+          "hazard_grade": "MODERATE",
+          "slope_deg": 11.0
+        }
+      ],
+      "hazards": [
+        {
+          "id": "HAZ-O01",
+          "type": "EXTREME_VACUUM_PRESSURE",
+          "name": "Summit Low Pressure Envelope",
+          "lat": 18.650,
+          "lon": -133.800,
+          "radius_m": 2500,
+          "severity": "CRITICAL",
+          "description": "Atmospheric pressure is only 0.72 hPa (0.01 psi) - near total vacuum. Suit thermal sublimation rate doubled.",
+          "avoidance_advice": "Suit auxiliary heat loop must be locked ON. Limit EVA duration to 150 minutes."
+        },
+        {
+          "id": "HAZ-O02",
+          "type": "COSMIC_RADIATION",
+          "name": "Thin Atmosphere Radiation Spike",
+          "lat": 18.650,
+          "lon": -133.800,
+          "radius_m": 3000,
+          "severity": "HIGH",
+          "description": "Zero atmospheric column shielding. GCR dose rate 1.45 mSv/day under quiet sun.",
+          "avoidance_advice": "Stay within shaded canyon walls or enter lava tube when solar indices elevate."
+        }
+      ],
+      "elevation_contours": [
+        { "level_m": 20800, "label": "+20800m Caldera Floor" },
+        { "level_m": 21000, "label": "+21000m Inner Shelf" },
+        { "level_m": 21200, "label": "+21200m Summit Ridge" },
+        { "level_m": 21400, "label": "+21400m Western Apex" }
+      ],
+      "telemetry_stream": {
+        "sol": 218,
+        "mtc": "15:45:10",
+        "temp_c": -74.8,
+        "temp_min_c": -108.2,
+        "temp_max_c": -32.0,
+        "pressure_pa": 72,
+        "radiation_msv_day": 1.48,
+        "dust_optical_depth_tau": 0.28,
+        "wind_speed_mps": 14.5,
+        "wind_direction_deg": 280,
+        "uv_flux_index": "LETHAL_UNFILTERED",
+        "active_orbiter": "MAVEN (Mars Atmosphere and Volatile EvolutioN)",
+        "comm_window_remaining_min": 12,
+        "uplink_signal_snr_db": 14.2
+      }
+    },
+    {
+      "id": "valles-marineris",
+      "name": "Valles Marineris (Melas Chasma Rift)",
+      "callsign": "VALLES-DELTA",
+      "coordinates": {
+        "lat": -9.800,
+        "lon": -76.400,
+        "elevation_m": -3800
+      },
+      "quadrangle": "MC-18 Coprates",
+      "surface_type": "Tectonic Rift Canyon & Recurring Slope Lineae (RSL)",
+      "recommended_eva_radius_km": 4.0,
+      "base_station": {
+        "id": "HAB-VALLES-04",
+        "name": "Coprates Chasma Base Camp",
+        "lat": -9.790,
+        "lon": -76.390,
+        "elevation_m": -3810,
+        "shelter_capacity": 6,
+        "o2_recharge_rate_lpm": 8.0,
+        "battery_dock_kw": 14.0
+      },
+      "pois": [
+        {
+          "id": "POI-V01",
+          "name": "Melas Chasma RSL Seepage Wall",
+          "category": "science",
+          "lat": -9.830,
+          "lon": -76.360,
+          "elevation_m": -3400,
+          "description": "Dark recurring narrow flows that appear on steep warm slopes; possible hydrated perchlorate liquid brines.",
+          "sample_target": "Hydrated magnesium perchlorate brine salts",
+          "hazard_grade": "CRITICAL_SLOPE",
+          "slope_deg": 28.5
+        },
+        {
+          "id": "POI-V02",
+          "name": "Massive Landslide Megabreccia Block",
+          "category": "landmark",
+          "lat": -9.760,
+          "lon": -76.430,
+          "elevation_m": -3950,
+          "description": "Giant rotated block from ancient canyon wall collapse revealing 4-billion-year crust stratigraphy.",
+          "sample_target": "Basal crust anorthosite & banded silicate",
+          "hazard_grade": "MODERATE",
+          "slope_deg": 13.0
+        }
+      ],
+      "hazards": [
+        {
+          "id": "HAZ-V01",
+          "type": "ROCKFALL_DEBRIS",
+          "name": "North Wall Gravity Slide Zone",
+          "lat": -9.810,
+          "lon": -76.380,
+          "radius_m": 750,
+          "severity": "CRITICAL",
+          "description": "Active thermal stress fracturing produces sporadic boulder rockfalls on talus slopes.",
+          "avoidance_advice": "Do not linger under overhanging cliffs. Traverse during minimum diurnal thermal gradient."
+        }
+      ],
+      "elevation_contours": [
+        { "level_m": -4200, "label": "-4200m Deep Rift Trough" },
+        { "level_m": -3800, "label": "-3800m Chasma Floor" },
+        { "level_m": -3400, "label": "-3400m Landslide Bench" },
+        { "level_m": -3000, "label": "-3000m Wall Step" }
+      ],
+      "telemetry_stream": {
+        "sol": 684,
+        "mtc": "11:05:19",
+        "temp_c": -49.2,
+        "temp_min_c": -84.0,
+        "temp_max_c": -6.5,
+        "pressure_pa": 830,
+        "radiation_msv_day": 0.54,
+        "dust_optical_depth_tau": 0.65,
+        "wind_speed_mps": 3.8,
+        "wind_direction_deg": 190,
+        "uv_flux_index": "MODERATE",
+        "active_orbiter": "Mars Odyssey (ODY)",
+        "comm_window_remaining_min": 44,
+        "uplink_signal_snr_db": 25.1
+      }
+    }
+  ]
+}

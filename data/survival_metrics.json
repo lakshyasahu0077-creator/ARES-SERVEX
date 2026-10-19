@@ -1,0 +1,80 @@
+{
+  "suit_model": "EMU-M4 Mars Surface Extravehicular Mobility Unit",
+  "suit_specifications": {
+    "dry_mass_kg": 68.0,
+    "internal_pressure_kpa": 29.6,
+    "pure_o2_atmosphere": true,
+    "co2_scrubber_type": "Regenerable Amine (RCA)",
+    "plss_battery_total_wh": 850,
+    "plss_battery_usable_wh": 765,
+    "primary_o2_tank_liters_stp": 720,
+    "emergency_reserve_o2_liters": 180,
+    "potable_water_reservoir_ml": 2400,
+    "max_sample_payload_kg": 12.5,
+    "nominal_walking_speed_kmh": 3.2,
+    "rough_terrain_speed_kmh": 2.1,
+    "steep_slope_speed_kmh": 1.2
+  },
+  "metabolic_rates": {
+    "standing_observation": {
+      "o2_liters_per_min": 0.70,
+      "o2_liters_per_hour": 42.0,
+      "metabolic_heat_watts": 120
+    },
+    "nominal_walk_flat": {
+      "o2_liters_per_min": 1.15,
+      "o2_liters_per_hour": 69.0,
+      "metabolic_heat_watts": 260
+    },
+    "moderate_grade_5_15_deg": {
+      "o2_liters_per_min": 1.60,
+      "o2_liters_per_hour": 96.0,
+      "metabolic_heat_watts": 380
+    },
+    "steep_ascent_over_15_deg": {
+      "o2_liters_per_min": 2.20,
+      "o2_liters_per_hour": 132.0,
+      "metabolic_heat_watts": 520
+    },
+    "regolith_sand_drag_penalty_multiplier": 1.35
+  },
+  "power_consumption_watts": {
+    "avionics_comms_heads_up_display": 42.0,
+    "lcvg_pump_baseline": 38.0,
+    "active_lcvg_chilling_per_100w_metabolic": 14.0,
+    "boot_glove_thermal_heaters_at_minus_60c": 45.0,
+    "boot_glove_thermal_heaters_at_minus_90c": 92.0,
+    "scientific_analyzer_spectral_unit": 28.0
+  },
+  "safety_thresholds": {
+    "rtb_thresholds": {
+      "GO": {
+        "status": "NOMINAL",
+        "min_reserve_percent": 35.0,
+        "description": "Safe to continue outbound leg and scientific sample collection."
+      },
+      "CAUTION": {
+        "status": "EVALUATE_RETURN",
+        "min_reserve_percent": 25.0,
+        "description": "Consumables threshold reached. Terminate core drilling, begin return trajectory to Hab."
+      },
+      "CRITICAL_ABORT": {
+        "status": "IMMEDIATE_RTB",
+        "min_reserve_percent": 15.0,
+        "description": "Immediate emergency RTB required. Drop non-critical payload if necessary."
+      }
+    },
+    "radiation_limits_msv": {
+      "daily_action_level": 1.20,
+      "daily_abort_level": 3.50,
+      "career_astronaut_limit": 600.0
+    },
+    "dust_storm_tau_limits": {
+      "nominal_clear": 0.5,
+      "moderate_dust_veil": 1.2,
+      "severe_dust_storm_shelter": 2.5
+    },
+    "max_traversable_slope_deg": 25.0,
+    "max_tumble_risk_slope_deg": 30.0
+  }
+}

@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ARES-SURVEX // Martian Surface EVA Operations Console</title>
+  
+  <!-- Telemetry Typeface -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  
+  <!-- Leaflet.js Interactive Mapping Library (Standard & Clean) -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
+  <!-- Aerospace Stylesheet -->
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <div class="mission-app-container">
+
+    <!-- TOP MASTHEAD & MISSION CLOCKS -->
+    <header class="mission-masthead">
+      <div class="brand-section">
+        <div class="mission-badge" title="ARES Joint Exploration Program">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square">
+            <polygon points="12 2 2 22 22 22"></polygon>
+            <circle cx="12" cy="14" r="3"></circle>
+          </svg>
+        </div>
+        <div class="brand-title">
+          <h1>
+            ARES-SURVEX
+            <span class="sys-id-tag">EVA-OPS-CONSOLE-V1</span>
+          </h1>
+          <span class="brand-sub">Interplanetary Survival Guide // Martian Surface Cartography</span>
+        </div>
+      </div>
+
+      <!-- Live Mission Clocks -->
+      <div class="mission-clocks">
+        <div class="clock-block">
+          <span class="clock-label">Active Sol</span>
+          <span class="clock-value highlight" id="clock-sol">SOL 1142</span>
+        </div>
+        <div class="clock-block">
+          <span class="clock-label">Local Mars Time</span>
+          <span class="clock-value highlight" id="clock-mtc">13:28:44 MTC</span>
+        </div>
+        <div class="clock-block">
+          <span class="clock-label">Earth Mission Elapsed</span>
+          <span class="clock-value" id="clock-utc">00:00:00 UTC</span>
+        </div>
+      </div>
+
+      <!-- Operational Status Indicators -->
+      <div class="uplink-status-strip">
+        <div class="status-pill nominal" title="Autonomous Risk Evaluation Subsystem Nominal">
+          <span class="status-dot"></span>
+          <span>PLSS: NOMINAL</span>
+        </div>
+        <div class="status-pill uplink" title="Deep Space Relay Active">
+          <span class="status-dot"></span>
+          <span>RELAY: ACTIVE</span>
+        </div>
+        <div class="status-pill caution" title="Planetary Protection Strict Quarantine Active">
+          <span>CAT IV-b</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- HIGH-DENSITY SENSOR TELEMETRY TICKER -->
+    <section class="telemetry-ticker">
+      <div class="ticker-item">
+        <span class="ticker-key" style="color:var(--mars-ochre);font-weight:700;">METEO HUD:</span>
+      </div>
+      <div id="telemetry-ticker-content" style="display:flex;gap:24px;align-items:center;">
+        <!-- Filled dynamically by app.js or skeleton loader -->
+      </div>
+    </section>
+
+    <!-- MAIN VIEWPORT GRID -->
+    <main class="mission-viewport">
+
+      <!-- LEFT SIDEBAR: ZONE SELECTOR, PRESETS, LAYERS, WAYPOINTS -->
+      <aside class="ops-panel panel-sidebar-left">
+        <div class="panel-header">
+          <h2>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="12" y1="8" x2="12" y2="12"></line>
+              <line x1="12" y1="16" x2="12.01" y2="16"></line>
+            </svg>
+            EXPLORATION SECTOR
+          </h2>
+          <span class="header-code">SEC-01</span>
+        </div>
+
+        <!-- Site Dropdown -->
+        <div class="panel-section">
+          <div class="field-group">
+            <label class="field-label" for="site-select">Planetary Landing Zone</label>
+            <select id="site-select" class="field-select">
+              <option value="jezero-crater">JEZERO-ALPHA // Jezero Crater Delta</option>
+              <option value="gale-crater">GALE-BETA // Gale Crater Mount Sharp</option>
+              <option value="olympus-mons">OLYMPUS-GAMMA // Olympus Mons Caldera</option>
+              <option value="valles-marineris">VALLES-DELTA // Valles Marineris Rift</option>
+            </select>
+          </div>
+
+          <!-- Quick Presets -->
+          <div class="field-group">
+            <span class="field-label">Pre-Approved EVA Traverses</span>
+            <div class="preset-list">
+              <button class="preset-btn" onclick="window.AresApp.loadMissionPreset('jezero-delta')">
+                <span>Jezero Delta Front Run</span>
+                <span class="preset-tag">3.8 km</span>
+              </button>
+              <button class="preset-btn" onclick="window.AresApp.loadMissionPreset('jezero-seitah')">
+                <span>Séítah Sand Dune Probe</span>
+                <span class="preset-tag">2.1 km</span>
+              </button>
+              <button class="preset-btn" onclick="window.AresApp.loadMissionPreset('gale-ridge')">
+                <span>Vera Rubin Hematite Ridge</span>
+                <span class="preset-tag">4.2 km</span>
+              </button>
+              <button class="preset-btn" onclick="window.AresApp.loadMissionPreset('olympus-rim')">
+                <span>Olympus Caldera Skylight</span>
+                <span class="preset-tag">2.9 km</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Layer Controls -->
+        <div class="panel-section">
+          <div class="section-title">
+            <span>Tactical Cartography Layers</span>
+            <span style="font-size:9px;color:var(--text-muted);">TOGGLE</span>
+          </div>
+          <div class="layer-toggles">
+            <div class="layer-toggle-row">
+              <label class="layer-label" for="layer-toggle-contours">
+                <span class="layer-legend-dot contour"></span>
+                <span>Topographic Contours (MOLA)</span>
+              </label>
+              <input type="checkbox" id="layer-toggle-contours" class="layer-checkbox" checked>
+            </div>
+            <div class="layer-toggle-row">
+              <label class="layer-label" for="layer-toggle-hazards">
+                <span class="layer-legend-dot hazard"></span>
+                <span>Terrain Hazards (Slopes/Dunes)</span>
+              </label>
+              <input type="checkbox" id="layer-toggle-hazards" class="layer-checkbox" checked>
+            </div>
+            <div class="layer-toggle-row">
+              <label class="layer-label" for="layer-toggle-science">
+                <span class="layer-legend-dot science"></span>
+                <span>Science Targets & Outcrops</span>
+              </label>
+              <input type="checkbox" id="layer-toggle-science" class="layer-checkbox" checked>
+            </div>
+            <div class="layer-toggle-row">
+              <label class="layer-label" for="layer-toggle-satellites">
+                <span class="layer-legend-dot satellite"></span>
+                <span>Orbital LOS Footprint</span>
+              </label>
+              <input type="checkbox" id="layer-toggle-satellites" class="layer-checkbox" checked>
+            </div>
+          </div>
+        </div>
+
+        <!-- Plotted Waypoints Table -->
+        <div class="panel-section" style="flex:1;display:flex;flex-direction:column;">
+          <div class="section-title">
+            <span>Plotted Waypoints (<span id="waypoint-count">0</span>)</span>
+            <button id="btn-clear-waypoints" class="btn-aerospace sm danger">CLEAR ALL</button>
+          </div>
+          <div class="waypoint-table-wrapper" style="flex:1;">
+            <table class="ops-table">
+              <thead>
+                <tr>
+                  <th>WP</th>
+                  <th>Designation</th>
+                  <th>Coordinates</th>
+                  <th style="text-align:right;">Action</th>
+                </tr>
+              </thead>
+              <tbody id="waypoint-table-body">
+                <!-- Injected dynamically -->
+              </tbody>
+            </table>
+          </div>
+          <div style="font-size:9px;color:var(--text-muted);margin-top:6px;">
+            TIP: Click directly on the surface map to drop a new navigation waypoint.
+          </div>
+        </div>
+      </aside>
+
+      <!-- CENTER: INTERACTIVE MARTIAN SURFACE MAP VIEWPORT -->
+      <section class="map-viewport-container map-reticle-mode">
+        <!-- Floating Map HUD Controls -->
+        <div class="map-control-overlay">
+          <button id="btn-reset-map" class="btn-aerospace sm">CENTER ON HAB</button>
+          <span style="font-size:10px;color:var(--text-secondary);align-self:center;padding:0 4px;">
+            DATUM: IAU 2000 MARS
+          </span>
+        </div>
+
+        <!-- Bottom HUD Coordinates Tracker -->
+        <div class="map-coords-hud">
+          <div class="hud-item">LAT: <span id="hud-lat">18.3800°</span></div>
+          <div class="hud-item">LON: <span id="hud-lon">77.5800°</span></div>
+          <div class="hud-item">ELEV: <span id="hud-elev">-2530 m</span></div>
+          <div class="hud-item">HORIZON: <span>14.2 km</span></div>
+        </div>
+
+        <!-- The Leaflet Canvas Target Container -->
+        <div id="mars-map-canvas" class="map-canvas-wrapper"></div>
+      </section>
+
+      <!-- RIGHT SIDEBAR: EVA CALCULATOR, METRICS & SAMPLE REGISTRY -->
+      <aside class="ops-panel panel-sidebar-right">
+        <div class="panel-header">
+          <h2>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+            </svg>
+            EVA LIFE-SUPPORT TELEMETRY
+          </h2>
+          <span class="header-code">PLSS-OPS</span>
+        </div>
+
+        <!-- Crew Complement -->
+        <div class="panel-section" style="padding:8px 14px;">
+          <div style="display:flex;align-items:center;justify-content:space-between;">
+            <label class="field-label" for="crew-count-input" style="margin-bottom:0;">EVA Crew Complement</label>
+            <input type="number" id="crew-count-input" class="field-input" min="1" max="6" value="1" style="width:60px;padding:3px 6px;">
+          </div>
+        </div>
+
+        <!-- Calculated Traverse Summary -->
+        <div class="panel-section">
+          <div class="section-title">Traverse Performance & Margin</div>
+
+          <div class="eva-results-card">
+            <div class="eva-metric-grid">
+              <div class="metric-box">
+                <div class="metric-key">Total Traverse Dist</div>
+                <div class="metric-val" id="metric-total-dist">0.000 km</div>
+              </div>
+              <div class="metric-box">
+                <div class="metric-key">Est. Walk Duration</div>
+                <div class="metric-val" id="metric-total-dur">0.0 min</div>
+              </div>
+              <div class="metric-box">
+                <div class="metric-key">Direct RTB Return</div>
+                <div class="metric-val" id="metric-rtb-dist">0.000 km (0m)</div>
+              </div>
+              <div class="metric-box">
+                <div class="metric-key">Max Gradient</div>
+                <div class="metric-val" id="metric-max-slope">Nominal (&lt;8°)</div>
+              </div>
+            </div>
+
+            <!-- O2 Consumable Gauge -->
+            <div class="gauge-container" style="margin-top:12px;">
+              <div class="gauge-header">
+                <span>PRIMARY O2 CONSUMPTION: <b id="metric-o2-val">0.0 L</b></span>
+                <span id="metric-o2-pct" style="font-weight:700;">100% MARGIN</span>
+              </div>
+              <div class="gauge-bar-track">
+                <div id="gauge-o2-fill" class="gauge-bar-fill" style="width: 100%;"></div>
+              </div>
+              <div style="font-size:8px;color:var(--text-muted);display:flex;justify-content:space-between;margin-top:2px;">
+                <span>0 L</span>
+                <span>RESERVE LIMIT 180 L</span>
+                <span>TANK 720 L</span>
+              </div>
+            </div>
+
+            <!-- Battery Consumable Gauge -->
+            <div class="gauge-container" style="margin-top:10px;">
+              <div class="gauge-header">
+                <span>PLSS BATTERY DRAIN: <b id="metric-bat-val">0.0 Wh</b></span>
+                <span id="metric-bat-pct" style="font-weight:700;">100% MARGIN</span>
+              </div>
+              <div class="gauge-bar-track">
+                <div id="gauge-bat-fill" class="gauge-bar-fill" style="width: 100%;"></div>
+              </div>
+              <div style="font-size:8px;color:var(--text-muted);display:flex;justify-content:space-between;margin-top:2px;">
+                <span>0 Wh</span>
+                <span>RESERVE 15%</span>
+                <span>USABLE 765 Wh</span>
+              </div>
+            </div>
+
+            <!-- Real-Time RTB Decision Status Banner -->
+            <div id="rtb-decision-banner" class="rtb-banner go">
+              <div class="rtb-title">
+                <span>●</span> RTB STATUS: NOMINAL_GO
+              </div>
+              <div class="rtb-message">
+                Traverse envelope is clear. Sufficient life support margin exists for outbound survey and return to Hab.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Science Sample Registry -->
+        <div class="panel-section" style="flex:1;display:flex;flex-direction:column;">
+          <div class="section-title">
+            <span>Science Sample Registry (<span id="sample-count">0</span>)</span>
+            <button id="btn-open-sample-modal" class="btn-aerospace sm primary">+ LOG SAMPLE</button>
+          </div>
+          <div id="sample-list-container" class="sample-list" style="flex:1;">
+            <!-- Rendered dynamically -->
+          </div>
+        </div>
+      </aside>
+
+    </main>
+
+    <!-- FOOTER: TELEMETRY INTEGRITY & COMPLIANCE -->
+    <footer class="mission-footer">
+      <div class="footer-left">
+        <span>ARES-SURVEX CARTOGRAPHY SYSTEM // SPEC NASA-JPL-OPS-2026</span>
+        <span class="footer-compliance-tag">COSPAR Planetary Protection Cat. IV-b Certified</span>
+        <span class="footer-compliance-tag">Mars Datum: IAU 2000 Spheroid</span>
+      </div>
+      <div class="footer-right" style="display:flex;gap:16px;">
+        <a href="tos.html" class="footer-link" target="_blank">Mission Terms of Service (TOS)</a>
+        <a href="privacy.html" class="footer-link" target="_blank">Planetary Telemetry & Privacy Policy</a>
+      </div>
+    </footer>
+
+  </div>
+
+  <!-- MODAL: LOG PLANETARY SCIENCE SAMPLE -->
+  <div id="sample-modal" class="ops-modal-backdrop">
+    <div class="ops-modal-window">
+      <div class="ops-modal-header">
+        <h3>Secured Hermetic Tube Sample Logging</h3>
+        <button id="btn-close-sample-modal" class="btn-aerospace sm danger">ESC</button>
+      </div>
+      <form id="sample-entry-form">
+        <div class="ops-modal-body">
+          <div class="field-group">
+            <label class="field-label" for="sample-name">Sample Field Name</label>
+            <input type="text" id="sample-name" class="field-input" placeholder="e.g. Belva Crater Breccia Core" required>
+          </div>
+          <div class="field-group">
+            <label class="field-label" for="sample-rock-type">Lithology / Rock Classification</label>
+            <select id="sample-rock-type" class="field-select" required>
+              <option value="Basaltic Igneous">Basaltic Igneous Bedrock</option>
+              <option value="Lacustrine Mudstone">Lacustrine Mudstone (Clay-Rich)</option>
+              <option value="Deltaic Sandstone">Deltaic Sandstone</option>
+              <option value="Hydrothermal Silica">Hydrothermal Silica Sinter</option>
+              <option value="Carbonate Concretion">Carbonate Concretion</option>
+              <option value="Iron-Nickel Meteorite">Iron-Nickel Meteorite Fragment</option>
+              <option value="Perchlorate Salt Crust">Hydrated Perchlorate Salt Crust</option>
+            </select>
+          </div>
+          <div class="field-group">
+            <label class="field-label" for="sample-mineralogy">Spectroscopic Mineralogy</label>
+            <input type="text" id="sample-mineralogy" class="field-input" placeholder="e.g. Smectite, Olivine, Mg-Sulfate" required>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+            <div class="field-group">
+              <label class="field-label" for="sample-lat">Latitude (°)</label>
+              <input type="number" step="0.0001" id="sample-lat" class="field-input" required>
+            </div>
+            <div class="field-group">
+              <label class="field-label" for="sample-lon">Longitude (°)</label>
+              <input type="number" step="0.0001" id="sample-lon" class="field-input" required>
+            </div>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+            <div class="field-group">
+              <label class="field-label" for="sample-mass">Mass (Grams)</label>
+              <input type="number" step="0.1" id="sample-mass" class="field-input" value="48.5" required>
+            </div>
+            <div class="field-group">
+              <label class="field-label" for="sample-logged-by">Specialist Callsign</label>
+              <input type="text" id="sample-logged-by" class="field-input" value="Lead Astrobiologist">
+            </div>
+          </div>
+          <div class="field-group">
+            <label class="field-label" for="sample-significance">Astrobiological / Geological Significance</label>
+            <textarea id="sample-significance" class="field-textarea" rows="3" placeholder="Document potential biosignatures, redox context, or stratigraphic age markers..."></textarea>
+          </div>
+        </div>
+        <div class="ops-modal-footer">
+          <button type="submit" class="btn-aerospace primary">SECURE & LOG SAMPLE</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Application Modules -->
+  <script src="js/api.js"></script>
+  <script src="js/eva-calculator.js"></script>
+  <script src="js/map.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

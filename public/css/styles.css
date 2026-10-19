@@ -1,0 +1,970 @@
+/* ==========================================================================
+   ARES-SURVEX: MARTIAN SURFACE EVA OPERATIONS SYSTEM
+   Design System: Authentic Aerospace Mission Operations Console (JPL / ESA Spec)
+   Strict Anti-Slop: 0px-2px radius, monospace telemetry, no soft blobs, no neon
+   ========================================================================== */
+
+:root {
+  /* Aerospace Tactical Palette */
+  --bg-space: #07090b;
+  --bg-frame: #0d1116;
+  --bg-panel: #131920;
+  --bg-surface: #182029;
+  --bg-input: #0b0f14;
+  --bg-hover: #1f2a36;
+  --bg-active: #273545;
+
+  /* Borders & Dividers */
+  --border-subtle: #1c2631;
+  --border-mid: #2c3a4a;
+  --border-focus: #4b6279;
+  --border-accent: #8b5cf6;
+
+  /* Tactical Functional Status */
+  --telemetry-green: #2ea043;
+  --telemetry-green-dim: rgba(46, 160, 67, 0.15);
+  --telemetry-amber: #d29922;
+  --telemetry-amber-dim: rgba(210, 153, 34, 0.15);
+  --telemetry-red: #f85149;
+  --telemetry-red-dim: rgba(248, 81, 73, 0.15);
+  --telemetry-blue: #388bfd;
+  --telemetry-blue-dim: rgba(56, 139, 253, 0.15);
+  --mars-ochre: #d97736;
+  --mars-ochre-dim: rgba(217, 119, 54, 0.15);
+
+  /* High-Readability Monospace Typography */
+  --font-mono: 'IBM Plex Mono', 'Roboto Mono', 'SF Mono', Consolas, 'Courier New', monospace;
+  --font-heading: 'Barlow Semi Condensed', 'DIN Alternate', 'Trebuchet MS', sans-serif;
+
+  /* Neutral Text Grades */
+  --text-primary: #e6edf3;
+  --text-secondary: #9eaab6;
+  --text-muted: #6e7987;
+  --text-code: #abb7c5;
+
+  /* Radii - Strict aerospace spec: 0px to 2px */
+  --radius-sharp: 0px;
+  --radius-micro: 2px;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  background-color: var(--bg-space);
+  color: var(--text-primary);
+  font-family: var(--font-mono);
+  font-size: 13px;
+  line-height: 1.45;
+  letter-spacing: -0.01em;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+/* Scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-frame);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border-mid);
+  border-radius: var(--radius-sharp);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--border-focus);
+}
+
+/* Base Layout Container */
+.mission-app-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: var(--bg-space);
+}
+
+/* ==========================================================================
+   TOP MASTHEAD & TELEMETRY TICKER
+   ========================================================================== */
+.mission-masthead {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 16px;
+  background: var(--bg-frame);
+  border-bottom: 1px solid var(--border-mid);
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.brand-section {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.mission-badge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  background: #191410;
+  border: 1px solid var(--mars-ochre);
+  color: var(--mars-ochre);
+}
+
+.brand-title {
+  display: flex;
+  flex-direction: column;
+}
+
+.brand-title h1 {
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.sys-id-tag {
+  font-size: 9px;
+  padding: 1px 4px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-mid);
+  color: var(--text-secondary);
+  font-weight: 600;
+  letter-spacing: 0.05em;
+}
+
+.brand-title .brand-sub {
+  font-size: 10px;
+  color: var(--text-muted);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+/* Mission Live Clocks */
+.mission-clocks {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background: var(--bg-panel);
+  border: 1px solid var(--border-subtle);
+  padding: 4px 12px;
+}
+
+.clock-block {
+  display: flex;
+  flex-direction: column;
+}
+
+.clock-label {
+  font-size: 9px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.clock-value {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-primary);
+  font-variant-numeric: tabular-nums;
+}
+
+.clock-value.highlight {
+  color: var(--mars-ochre);
+}
+
+/* Uplink / Comms Bar */
+.uplink-status-strip {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 8px;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  border: 1px solid;
+  border-radius: var(--radius-micro);
+  text-transform: uppercase;
+}
+
+.status-pill.nominal {
+  background: var(--telemetry-green-dim);
+  border-color: var(--telemetry-green);
+  color: #3fb950;
+}
+
+.status-pill.caution {
+  background: var(--telemetry-amber-dim);
+  border-color: var(--telemetry-amber);
+  color: #e3b341;
+}
+
+.status-pill.abort {
+  background: var(--telemetry-red-dim);
+  border-color: var(--telemetry-red);
+  color: #f85149;
+}
+
+.status-pill.uplink {
+  background: var(--telemetry-blue-dim);
+  border-color: var(--telemetry-blue);
+  color: #58a6ff;
+}
+
+.status-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+/* High-Density Telemetry Ticker */
+.telemetry-ticker {
+  display: flex;
+  align-items: center;
+  background: var(--bg-surface);
+  border-bottom: 1px solid var(--border-subtle);
+  padding: 4px 16px;
+  overflow-x: auto;
+  gap: 24px;
+}
+
+.ticker-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+  font-size: 11px;
+}
+
+.ticker-key {
+  color: var(--text-muted);
+  text-transform: uppercase;
+  font-size: 10px;
+}
+
+.ticker-val {
+  font-weight: 600;
+  color: var(--text-primary);
+  font-variant-numeric: tabular-nums;
+}
+
+.ticker-val.warning {
+  color: var(--telemetry-amber);
+}
+
+.ticker-val.danger {
+  color: var(--telemetry-red);
+}
+
+/* ==========================================================================
+   PRIMARY WORKSPACE LAYOUT (SPLIT VIEW)
+   ========================================================================== */
+.mission-viewport {
+  display: grid;
+  grid-template-columns: 320px 1fr 360px;
+  flex: 1;
+  min-height: calc(100vh - 120px);
+  background: var(--bg-space);
+}
+
+@media (max-width: 1200px) {
+  .mission-viewport {
+    grid-template-columns: 280px 1fr;
+  }
+  .panel-sidebar-right {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 860px) {
+  .mission-viewport {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Side Panels */
+.ops-panel {
+  background: var(--bg-frame);
+  border-right: 1px solid var(--border-mid);
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+
+.panel-sidebar-right {
+  border-right: none;
+  border-left: 1px solid var(--border-mid);
+}
+
+/* Section Headers */
+.panel-header {
+  padding: 10px 14px;
+  background: var(--bg-panel);
+  border-bottom: 1px solid var(--border-mid);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.panel-header h2 {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.panel-header .header-code {
+  font-size: 9px;
+  color: var(--text-muted);
+}
+
+.panel-section {
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.section-title {
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Form Controls & Inputs */
+.field-group {
+  margin-bottom: 10px;
+}
+
+.field-label {
+  display: block;
+  font-size: 10px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+
+.field-select,
+.field-input,
+.field-textarea {
+  width: 100%;
+  background: var(--bg-input);
+  border: 1px solid var(--border-mid);
+  color: var(--text-primary);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  padding: 6px 8px;
+  border-radius: var(--radius-sharp);
+  transition: border-color 80ms ease;
+}
+
+.field-select:focus,
+.field-input:focus,
+.field-textarea:focus {
+  outline: none;
+  border-color: var(--mars-ochre);
+}
+
+/* Buttons */
+.btn-aerospace {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-mid);
+  color: var(--text-primary);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 6px 12px;
+  border-radius: var(--radius-sharp);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  transition: background-color 60ms ease, border-color 60ms ease;
+}
+
+.btn-aerospace:hover {
+  background: var(--bg-hover);
+  border-color: var(--border-focus);
+}
+
+.btn-aerospace:active {
+  background: var(--bg-active);
+}
+
+.btn-aerospace.primary {
+  background: #733816;
+  border-color: var(--mars-ochre);
+  color: #fff;
+}
+
+.btn-aerospace.primary:hover {
+  background: #8b441a;
+}
+
+.btn-aerospace.danger {
+  background: #4c1d1d;
+  border-color: var(--telemetry-red);
+  color: #fff;
+}
+
+.btn-aerospace.danger:hover {
+  background: #632525;
+}
+
+.btn-aerospace.sm {
+  font-size: 10px;
+  padding: 3px 6px;
+}
+
+.btn-block {
+  width: 100%;
+}
+
+.button-row {
+  display: flex;
+  gap: 6px;
+}
+
+/* Quick Mission Presets */
+.preset-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.preset-btn {
+  text-align: left;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-code);
+  font-size: 11px;
+  padding: 6px 8px;
+  cursor: pointer;
+  border-radius: var(--radius-sharp);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.preset-btn:hover {
+  background: var(--bg-hover);
+  border-color: var(--border-mid);
+  color: var(--text-primary);
+}
+
+.preset-btn .preset-tag {
+  font-size: 9px;
+  color: var(--text-muted);
+}
+
+/* Layer Control Checkboxes */
+.layer-toggles {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.layer-toggle-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 8px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+}
+
+.layer-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  color: var(--text-secondary);
+  cursor: pointer;
+}
+
+.layer-legend-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: var(--radius-sharp);
+}
+
+.layer-legend-dot.contour { background: #388bfd; }
+.layer-legend-dot.hazard { background: #f85149; }
+.layer-legend-dot.science { background: #2ea043; }
+.layer-legend-dot.satellite { background: #d29922; }
+
+.layer-checkbox {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 14px;
+  height: 14px;
+  background: var(--bg-input);
+  border: 1px solid var(--border-mid);
+  cursor: pointer;
+  display: inline-grid;
+  place-content: center;
+}
+
+.layer-checkbox:checked {
+  background: var(--mars-ochre);
+  border-color: var(--mars-ochre);
+}
+
+.layer-checkbox:checked::after {
+  content: "";
+  width: 6px;
+  height: 6px;
+  background: #000;
+}
+
+/* ==========================================================================
+   CENTER INTERACTIVE MAP VIEWPORT
+   ========================================================================== */
+.map-viewport-container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background: #000;
+  overflow: hidden;
+}
+
+.map-control-overlay {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 1000;
+  display: flex;
+  gap: 6px;
+  background: rgba(13, 17, 22, 0.92);
+  border: 1px solid var(--border-mid);
+  padding: 4px;
+}
+
+.map-coords-hud {
+  position: absolute;
+  bottom: 12px;
+  left: 12px;
+  z-index: 1000;
+  background: rgba(13, 17, 22, 0.94);
+  border: 1px solid var(--border-mid);
+  padding: 6px 10px;
+  display: flex;
+  gap: 16px;
+  font-size: 10px;
+  color: var(--text-secondary);
+  pointer-events: none;
+}
+
+.hud-item span {
+  color: var(--text-primary);
+  font-weight: 700;
+}
+
+.map-canvas-wrapper {
+  width: 100%;
+  height: 100%;
+  min-height: 500px;
+  flex: 1;
+}
+
+/* Crosshair Reticle for precision plotting */
+.map-reticle-mode {
+  cursor: crosshair !important;
+}
+
+/* Waypoint List */
+.waypoint-table-wrapper {
+  max-height: 220px;
+  overflow-y: auto;
+  border: 1px solid var(--border-subtle);
+  background: var(--bg-input);
+}
+
+.ops-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 11px;
+}
+
+.ops-table th {
+  background: var(--bg-panel);
+  color: var(--text-muted);
+  text-align: left;
+  padding: 4px 6px;
+  font-size: 9px;
+  font-weight: 600;
+  text-transform: uppercase;
+  border-bottom: 1px solid var(--border-mid);
+}
+
+.ops-table td {
+  padding: 4px 6px;
+  border-bottom: 1px solid var(--border-subtle);
+  color: var(--text-secondary);
+  white-space: nowrap;
+}
+
+.ops-table tr:hover td {
+  background: var(--bg-hover);
+  color: var(--text-primary);
+}
+
+/* ==========================================================================
+   RIGHT TELEMETRY & EVA CALCULATOR PANEL
+   ========================================================================== */
+.eva-results-card {
+  background: var(--bg-panel);
+  border: 1px solid var(--border-mid);
+  padding: 10px;
+  margin-bottom: 12px;
+}
+
+.eva-metric-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.metric-box {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  padding: 6px 8px;
+}
+
+.metric-key {
+  font-size: 9px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+}
+
+.metric-val {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-primary);
+  font-variant-numeric: tabular-nums;
+  margin-top: 2px;
+}
+
+.metric-val.good { color: var(--telemetry-green); }
+.metric-val.caution { color: var(--telemetry-amber); }
+.metric-val.critical { color: var(--telemetry-red); }
+
+/* Progress Gauge Bars */
+.gauge-container {
+  margin-top: 6px;
+}
+
+.gauge-header {
+  display: flex;
+  justify-content: space-between;
+  font-size: 9px;
+  color: var(--text-muted);
+  margin-bottom: 2px;
+}
+
+.gauge-bar-track {
+  height: 6px;
+  background: var(--bg-input);
+  border: 1px solid var(--border-subtle);
+  position: relative;
+  overflow: hidden;
+}
+
+.gauge-bar-fill {
+  height: 100%;
+  background: var(--telemetry-green);
+  transition: width 150ms ease;
+}
+
+.gauge-bar-fill.amber { background: var(--telemetry-amber); }
+.gauge-bar-fill.red { background: var(--telemetry-red); }
+
+/* RTB Decision Banner */
+.rtb-banner {
+  padding: 8px 10px;
+  border: 1px solid;
+  margin-top: 10px;
+  font-size: 11px;
+}
+
+.rtb-banner.go {
+  background: var(--telemetry-green-dim);
+  border-color: var(--telemetry-green);
+  color: #7ee787;
+}
+
+.rtb-banner.caution {
+  background: var(--telemetry-amber-dim);
+  border-color: var(--telemetry-amber);
+  color: #f0c674;
+}
+
+.rtb-banner.abort {
+  background: var(--telemetry-red-dim);
+  border-color: var(--telemetry-red);
+  color: #ff7b72;
+}
+
+.rtb-title {
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.rtb-message {
+  font-size: 10px;
+  margin-top: 4px;
+  color: var(--text-primary);
+  line-height: 1.35;
+}
+
+/* Science Sample Registry Drawer / Section */
+.sample-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  max-height: 240px;
+  overflow-y: auto;
+}
+
+.sample-item {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  padding: 6px 8px;
+  font-size: 10px;
+}
+
+.sample-item-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.sample-id-code {
+  color: var(--mars-ochre);
+}
+
+.sample-details {
+  color: var(--text-secondary);
+  margin-top: 2px;
+  font-size: 9px;
+}
+
+.sample-meta {
+  color: var(--text-muted);
+  margin-top: 2px;
+  font-size: 9px;
+  display: flex;
+  justify-content: space-between;
+}
+
+/* ==========================================================================
+   SKELETON LOADERS (AEROSPACE TELEMETRY SPEC)
+   Strictly no bouncy bubbles or colorful glints; subtle monochrome pulse
+   ========================================================================== */
+.skeleton {
+  background: #18222c;
+  position: relative;
+  overflow: hidden;
+}
+
+.skeleton::after {
+  content: "";
+  position: absolute;
+  top: 0; right: 0; bottom: 0; left: 0;
+  background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.04) 50%, transparent 100%);
+  animation: skeleton-sweep 1.2s infinite ease-in-out;
+}
+
+@keyframes skeleton-sweep {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+.skeleton-text {
+  height: 12px;
+  margin-bottom: 6px;
+  border-radius: var(--radius-sharp);
+}
+
+.skeleton-text.short { width: 45%; }
+.skeleton-text.medium { width: 75%; }
+.skeleton-text.full { width: 100%; }
+
+.skeleton-box {
+  height: 38px;
+  width: 100%;
+}
+
+/* ==========================================================================
+   FOOTER: SYSTEM STATS & COMPLIANCE
+   ========================================================================== */
+.mission-footer {
+  background: var(--bg-frame);
+  border-top: 1px solid var(--border-mid);
+  padding: 8px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 10px;
+  color: var(--text-muted);
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.footer-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.footer-link {
+  color: var(--text-secondary);
+  text-decoration: none;
+  transition: color 80ms ease;
+}
+
+.footer-link:hover {
+  color: var(--mars-ochre);
+  text-decoration: underline;
+}
+
+.footer-compliance-tag {
+  color: #79828d;
+}
+
+/* Modal Window for Sample Logging & Compliance Overlays */
+.ops-modal-backdrop {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0, 0, 0, 0.85);
+  display: none;
+  place-content: center;
+  z-index: 9999;
+  padding: 20px;
+}
+
+.ops-modal-backdrop.active {
+  display: grid;
+}
+
+.ops-modal-window {
+  background: var(--bg-frame);
+  border: 1px solid var(--border-focus);
+  width: 100%;
+  max-width: 540px;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.ops-modal-header {
+  padding: 10px 14px;
+  background: var(--bg-panel);
+  border-bottom: 1px solid var(--border-mid);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.ops-modal-header h3 {
+  font-size: 12px;
+  text-transform: uppercase;
+  color: var(--text-primary);
+  letter-spacing: 0.06em;
+}
+
+.ops-modal-body {
+  padding: 16px;
+  overflow-y: auto;
+}
+
+.ops-modal-footer {
+  padding: 10px 14px;
+  background: var(--bg-panel);
+  border-top: 1px solid var(--border-mid);
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+/* Custom Leaflet Map Markers & Aerospace Popups */
+.leaflet-popup-content-wrapper {
+  background: var(--bg-frame) !important;
+  color: var(--text-primary) !important;
+  border: 1px solid var(--border-mid) !important;
+  border-radius: var(--radius-sharp) !important;
+  box-shadow: none !important;
+  font-family: var(--font-mono) !important;
+  font-size: 11px !important;
+  padding: 0 !important;
+}
+
+.leaflet-popup-tip {
+  background: var(--bg-frame) !important;
+}
+
+.leaflet-popup-content {
+  margin: 10px 12px !important;
+  line-height: 1.4 !important;
+}
+
+.popup-title {
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--mars-ochre);
+  font-size: 11px;
+  margin-bottom: 4px;
+  border-bottom: 1px solid var(--border-subtle);
+  padding-bottom: 3px;
+}
+
+.popup-desc {
+  font-size: 10px;
+  color: var(--text-secondary);
+  margin-bottom: 6px;
+}
+
+.popup-specs {
+  font-size: 9px;
+  color: var(--text-muted);
+}
